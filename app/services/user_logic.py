@@ -116,7 +116,7 @@ class UserService:
 
     async def update_password(
         self, user_id: int, password_update: UserPasswordUpdate
-    ) -> User:
+    ) -> None:
         user = await self.get_user_by_id(user_id)
 
         is_valid = await asyncio.to_thread(
@@ -133,7 +133,6 @@ class UserService:
 
         await self.db.commit()
         await self.db.refresh(user)
-        return user
 
     async def delete_user(self, user_id: int):
         user = await self.get_user_by_id(user_id)
