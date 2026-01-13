@@ -25,14 +25,14 @@ async def update_current_user(
     return await user_service.update_user(current_user.user_id, user_update)
 
 
-@router.patch("/me/password", response_model=UserRead)
+@router.patch("/me/password", response_model=Message)
 async def update_current_user_password(
     password_update: UserPasswordUpdate,
     current_user: CurrentUser,
     user_service: UserService = Depends(get_user_service),
 ):
-    return await user_service.update_password(current_user.user_id, password_update)
-
+    await user_service.update_password(current_user.user_id, password_update)
+    return Message(message="Password updated successfully")
 
 @router.delete("/me", response_model=Message)
 async def delete_current_user(
@@ -74,7 +74,7 @@ async def update_user(
     return await user_service.update_user(user_id, user_update)
 
 
-@router.put("/{user_id}/password", response_model=UserRead)
+@router.put("/{user_id}/password", response_model=UserRead, dependencies= [Depends(admin_role_checker)])
 async def update_password(
     user_id: int,
     password_update: UserPasswordUpdate,
