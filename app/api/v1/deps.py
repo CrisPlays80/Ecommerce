@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -49,5 +49,8 @@ class RoleChecker:
 
     async def __call__(self, current_user: User = Depends(get_current_user)) -> User:
         if current_user.role not in self.allowed_roles:
-            raise PermissionError("Insufficient permissions")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, 
+                detail="Insufficient permissions"
+            )
         return current_user
