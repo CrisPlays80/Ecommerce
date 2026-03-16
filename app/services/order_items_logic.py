@@ -18,7 +18,12 @@ class OrderItemService:
         return order_items.scalars().all()
 
     async def create_order_item(self, item_data: OrderItemCreate) -> OrderItem:
-        new_item = OrderItem(**item_data.model_dump())
+        new_item = OrderItem(
+            order_id = item_data.order_id,
+            product_id = item_data.product_id,
+            quantity = item_data.quantity,
+            unit_price = item_data.unit_price,
+        )
         self.db.add(new_item)
         await self.db.commit()
         await self.db.refresh(new_item)

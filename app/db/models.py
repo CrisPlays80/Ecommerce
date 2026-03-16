@@ -61,7 +61,7 @@ class OrderItem(Base):
 
     order_item_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     quantity: Mapped[int] = mapped_column(nullable=False)
-    price_per_unit: Mapped[float] = mapped_column(nullable=False)
+    unit_price: Mapped[float] = mapped_column(nullable=False)
     discount: Mapped[float] = mapped_column(nullable=True, default=0.0)
 
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.order_id"), nullable=False)

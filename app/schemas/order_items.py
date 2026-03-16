@@ -6,7 +6,7 @@ from app.schemas.products import ProductRead
 
 class OrderItemCreate(BaseModel):
     quantity: int
-    price_per_unit: float
+    unit_price: float
     discount: float | None = 0.0
     order_id: int
     product_id: int
@@ -15,7 +15,7 @@ class OrderItemCreate(BaseModel):
 class OrderItemRead(BaseModel):
     order_item_id: int
     quantity: int
-    price_per_unit: float
+    unit_price: float
     discount: float | None = 0.0
     order_id: int
     product_id: int
